@@ -1,0 +1,7 @@
+{
+  "name": "lacarte-apl",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
