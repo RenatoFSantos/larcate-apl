@@ -1,0 +1,17 @@
+ion-toolbar {
+  background-color: var(--ion-color-primary);
+}
+
+ion-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#btn_sair {
+  margin-right: 15px;
+}
+
+ion-back-button {
+  display: block;
+}

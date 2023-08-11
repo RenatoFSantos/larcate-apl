@@ -6,13 +6,34 @@
       "files": ["*.ts"],
       "parserOptions": {
         "project": ["tsconfig.json"],
+        "tsconfigRootDir": "lacarte-apl",
         "createDefaultProgram": true
       },
       "extends": [
-        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/ng-cli-compat",
+        "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
+      "plugins": ["prefer-arrow"],
       "rules": {
+        "prefer-arrow/prefer-arrow-functions": [
+          "error",
+          {
+            "disallowPrototype": true,
+            "singleReturnOnly": false,
+            "classPropertiesAllowed": false
+          }
+        ],
+        "prefer-arrow-callback": ["error", { "allowNamedFunctions": true }],
+        "func-style": ["error", "expression", { "allowArrowFunctions": true }],
+        "@typescript-eslint/no-inferrable-types": [
+          "error",
+          { "ignoreParameters": true, "ignoreProperties": true }
+        ],
+        "@typescript-eslint/naming-convention": [
+          "error",
+          { "selector": "variableLike", "format": ["camelCase", "UPPER_CASE"] }
+        ],
         "@angular-eslint/component-class-suffix": [
           "error",
           {
@@ -34,7 +55,13 @@
             "prefix": "app",
             "style": "camelCase"
           }
-        ]
+        ],
+        "@typescript-eslint/member-ordering": [
+          "error",
+          { "default": ["signature", "constructor"] }
+        ],
+        "@typescript-eslint/dot-notation": "off",
+        "@angular-eslint/no-input-rename": "off"
       }
     },
     {

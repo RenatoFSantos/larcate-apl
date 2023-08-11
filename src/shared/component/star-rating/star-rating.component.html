@@ -1,0 +1,28 @@
+<div *ngIf="vote">
+  <ion-button
+    size="small"
+    fill="clear"
+    [color]="color"
+    *ngFor="let ratingId of ratingArr; index as i"
+    [id]="'star_' + i"
+    (click)="onClick(i + 1)"
+  >
+    <ion-icon size="small" name="showIcon(i)"></ion-icon>
+  </ion-button>
+</div>
+
+<div *ngIf="!vote">
+  <ion-icon
+    [color]="color"
+    *ngFor="let ratingId of ratingArr; index as i"
+    [id]="'star_' + i"
+    size="small"
+    [name]="showIcon(i)"
+  ></ion-icon>
+</div>
+<!-- <mat-error *ngIf="starCount == null || starCount == 0">
+  Star count is <strong>required</strong> and cannot be zero
+</mat-error> -->
+<!-- <p class="body-2">
+    Your rated <span class="body-2">{{rating}}</span> / <span class="body-2">{{starCount}}</span>
+</p> -->

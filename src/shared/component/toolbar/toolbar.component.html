@@ -1,0 +1,12 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button *ngIf="!isBack"></ion-menu-button>
+      <ion-back-button *ngIf="isBack"></ion-back-button>
+      <ion-title>
+        {{title}}
+      </ion-title>
+      <ion-icon *ngIf="isLogged" id="btn_sair" name="person-circle-outline" slot="end" (click)="goProfile()"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

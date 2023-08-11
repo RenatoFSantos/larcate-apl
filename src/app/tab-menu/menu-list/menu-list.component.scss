@@ -1,0 +1,35 @@
+ion-content {
+  --background: var(--ion-background-app);
+}
+
+ion-refresher-content {
+  background-color: var(--ion-background-app);
+}
+
+ion-card {
+  --background: var(--ion-background-gradient);
+}
+
+ion-toolbar {
+  background-color: var(--ion-color-primary);
+}
+
+ion-searchbar {
+  border-radius: 10%;
+}
+
+ion-card-content {
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+.cashback {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+}
+
+ion-button {
+  width: 50px;
+}

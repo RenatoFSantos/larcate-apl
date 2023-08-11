@@ -1,1 +1,9 @@
+@import "../../theme/variables.scss";
 
+ion-tab-bar {
+  padding: 5px 0;
+}
+
+.tab-selected {
+  color: var(--ion-color-tertiary);
+}

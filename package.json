@@ -9,7 +9,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "resources": "capacitor-resources -p android,ios && node scripts/resources.js"
   },
   "private": true,
   "dependencies": {
@@ -21,13 +22,20 @@
     "@angular/platform-browser": "^16.0.0",
     "@angular/platform-browser-dynamic": "^16.0.0",
     "@angular/router": "^16.0.0",
+    "@capacitor/android": "5.2.2",
     "@capacitor/app": "5.0.6",
-    "@capacitor/core": "5.2.2",
+    "@capacitor/core": "^5.2.2",
     "@capacitor/haptics": "5.0.6",
+    "@capacitor/ios": "^5.2.3",
     "@capacitor/keyboard": "5.0.6",
     "@capacitor/status-bar": "5.0.6",
     "@ionic/angular": "^7.0.0",
+    "@ionic/pwa-elements": "^3.1.1",
+    "br-mask": "^0.0.10",
+    "date-fns": "^2.29.3",
+    "dayjs": "^1.11.9",
     "ionicons": "^7.0.0",
+    "ngx-mask": "^13.1.13",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
@@ -43,7 +51,7 @@
     "@angular/compiler": "^16.0.0",
     "@angular/compiler-cli": "^16.0.0",
     "@angular/language-service": "^16.0.0",
-    "@capacitor/cli": "5.2.2",
+    "@capacitor/cli": "^5.2.2",
     "@ionic/angular-toolkit": "^9.0.0",
     "@types/jasmine": "~4.3.0",
     "@types/node": "^12.11.1",
@@ -61,8 +69,9 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
+    "protractor": "~7.0.0",
     "ts-node": "^8.3.0",
     "typescript": "~5.0.2"
   },
-  "description": "An Ionic project"
+  "description": "Lacarte - Fidelidade"
 }
