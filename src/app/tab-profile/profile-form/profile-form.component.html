@@ -1,3 +1,317 @@
-<p>
-  profile-form works!
-</p>
+<!-- <app-toolbar
+  title="Perfil"
+  [check-login]="checked"
+  (selected)="selected_toolbar($event)"
+></app-toolbar> -->
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar color="primary">
+      <ion-title size="large"> Perfil </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- **************************************** -->
+  <!-- LOGIN USER -->
+  <!-- **************************************** -->
+
+  <ion-card *ngIf="!isLogged() && !inRegister">
+    <ion-card-header>
+      <ion-card-title>Login</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form
+        *ngIf="formResource"
+        [formGroup]="formResource"
+        (ngSubmit)="submitForm()"
+        novalidate
+      >
+        <ion-item lines="full">
+          <ion-label position="stacked">Email:</ion-label>
+          <ion-input
+            ngDefaultControl
+            aria-label="Email"
+            formControlName="userDsEmail"
+            type="email"
+            required
+          ></ion-input>
+          <ion-note slot="helperText" color="danger" padding
+            ><app-error-message
+              [form-control]="formResource.get('userDsEmail') | formControlPipe"
+            ></app-error-message
+          ></ion-note>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-label position="stacked">Senha:</ion-label>
+          <ion-input
+            ngDefaultControl
+            aria-label="Senha"
+            formControlName="userCdPassword"
+            type="password"
+            required
+          ></ion-input>
+          <ion-note slot="helperText" color="danger" padding
+            ><app-error-message
+              [form-control]="
+                formResource.get('userCdPassword') | formControlPipe
+              "
+            ></app-error-message
+          ></ion-note>
+        </ion-item>
+        <ion-button
+          id="first"
+          type="submit"
+          expand="block"
+          size="default"
+          fill="solid"
+        >
+          Entrar
+        </ion-button>
+        <ion-button
+          (click)="insertUser()"
+          expand="block"
+          size="default"
+          fill="solid"
+        >
+          Novo Usuário
+        </ion-button>
+        <ion-button
+          (click)="forgetPassword()"
+          expand="block"
+          size="default"
+          fill="clear"
+        >
+          Esqueci a senha
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- **************************************** -->
+  <!-- USER REGISTRATION -->
+  <!-- **************************************** -->
+
+  <ion-card *ngIf="!isLogged() && inRegister">
+    <ion-card-header>
+      <ion-card-title>Cadastro</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form
+        *ngIf="formResource"
+        [formGroup]="formResource"
+        (ngSubmit)="submitForm()"
+        novalidate
+      >
+        <ion-item lines="full">
+          <ion-label position="stacked">Nome:</ion-label>
+          <ion-input
+            ngDefaultControl
+            aria-label="Nome"
+            formControlName="userNmName"
+            type="text"
+          ></ion-input>
+          <ion-note slot="helper" color="danger" padding
+            ><app-error-message
+              [form-control]="formResource.get('userNmName') | formControlPipe"
+            ></app-error-message
+          ></ion-note>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-label position="stacked">Email:</ion-label>
+          <ion-input
+            ngDefaultControl
+            aria-label="Email"
+            formControlName="userDsEmail"
+            type="email"
+          ></ion-input>
+          <ion-note slot="helperText" color="danger" padding
+            ><app-error-message
+              [form-control]="formResource.get('userDsEmail') | formControlPipe"
+            ></app-error-message
+          ></ion-note>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-label position="stacked">Senha:</ion-label>
+          <ion-input
+            ngDefaultControl
+            aria-label="Senha"
+            formControlName="userCdPassword"
+            type="password"
+          ></ion-input>
+          <ion-note slot="helperText" color="danger" padding
+            ><app-error-message
+              [form-control]="
+                formResource.get('userCdPassword') | formControlPipe
+              "
+            ></app-error-message
+          ></ion-note>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-label position="stacked">Confirma Senha:</ion-label>
+          <ion-input
+            ngDefaultControl
+            aria-label="Senha"
+            formControlName="userCdConfirmPassword"
+            type="password"
+          ></ion-input>
+        </ion-item>
+        <ion-button
+          id="first"
+          type="submit"
+          expand="block"
+          size="large"
+          fill="solid"
+        >
+          Salvar
+        </ion-button>
+        <ion-button
+          (click)="cancelFormRegister()"
+          expand="block"
+          size="default"
+          fill="outline"
+        >
+          Cancelar
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- **************************************** -->
+  <!-- USER PROFILE -->
+  <!-- **************************************** -->
+
+  <ion-card *ngIf="isLogged()">
+    <!-- <ion-card-header>
+      <ion-card-title>Usuário</ion-card-title>
+    </ion-card-header> -->
+
+    <ion-card-content>
+      <form
+        class="profile_style"
+        *ngIf="formResource"
+        [formGroup]="formResource"
+        (ngSubmit)="submitForm()"
+        novalidate
+      >
+        <div
+          class="preview"
+          [style.background-image]="'url(&quot;' + avatar + '&quot;)'"
+        >
+          <ion-button
+            expand="block"
+            size="small"
+            fill="solid"
+            (click)="addPhotoToGallery()"
+          >
+            Alterar imagem
+          </ion-button>
+        </div>
+
+        <ion-item lines="full">
+          <ion-label position="stacked">Nome:</ion-label>
+          <ion-input
+            ngDefaultControl
+            aria-label="Nome"
+            formControlName="userNmName"
+            type="text"
+          ></ion-input>
+          <ion-note slot="errorText">Erro encontrado</ion-note>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-label position="stacked">Sobrenome:</ion-label>
+          <ion-input
+            ngDefaultControl
+            aria-label="Sobrenome"
+            formControlName="userNmLastname"
+            type="text"
+          ></ion-input>
+        </ion-item>
+        <ion-item lines="full" (click)="showPicker = !showPicker">
+          <ion-icon
+            name="calendar-outline"
+            slot="start"
+            color="primary"
+          ></ion-icon>
+          <ion-label position="stacked">Nascimento:</ion-label>
+          <ion-input
+            #dateBirth
+            ngDefaultControl
+            aria-label="Data de Nascimento"
+            [value]="birthDateTime"
+            type="text"
+            [clearInput]="true"
+            readonly
+          ></ion-input>
+        </ion-item>
+        <ion-datetime
+          #datetime
+          *ngIf="showPicker"
+          displayFormat="DD/MM/YYYY"
+          [value]="birthDate"
+          size="cover"
+          (ionChange)="dateChanged(datetime.value)"
+        >
+        </ion-datetime>
+        <ion-item lines="full">
+          <ion-label position="stacked">Email:</ion-label>
+          <ion-input
+            ngDefaultControl
+            aria-label="Email"
+            formControlName="userDsEmail"
+            type="email"
+          ></ion-input>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-label position="stacked">Senha:</ion-label>
+          <ion-input
+            ngDefaultControl
+            aria-label="Senha"
+            formControlName="userCdPassword"
+            type="password"
+          ></ion-input>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-label position="stacked">Confirma Senha:</ion-label>
+          <ion-input
+            ngDefaultControl
+            aria-label="Senha"
+            formControlName="userCdConfirmPassword"
+            type="password"
+          ></ion-input>
+        </ion-item>
+
+        <ion-button
+          id="first"
+          type="submit"
+          expand="block"
+          size="large"
+          fill="solid"
+        >
+          Salvar
+        </ion-button>
+        <ion-button
+          (click)="logout()"
+          expand="block"
+          size="default"
+          fill="outline"
+        >
+          Sair
+        </ion-button>
+      </form>
+
+      <ion-item lines="full">
+        <ion-icon slot="start" name="moon"></ion-icon>
+        <ion-label> Ativar Tema Dark </ion-label>
+        <ion-toggle
+          #theme
+          aria-label="Dark"
+          id="themeToggle"
+          slot="end"
+          (ionChange)="changeTheme($event)"
+        ></ion-toggle>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

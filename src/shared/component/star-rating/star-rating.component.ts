@@ -13,7 +13,7 @@ export class StarRatingComponent implements OnInit {
   @Input('vote') vote: boolean = false;
   @Output() ratingUpdated = new EventEmitter();
 
-  ratingArr = [];
+  ratingArr: any = [];
 
   constructor(private alertSrv: AlertService) {}
 

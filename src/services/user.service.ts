@@ -1,5 +1,4 @@
 import { iResultHttp } from './../interfaces/iResultHttp';
-import { LoginModel } from './../models/login.model';
 import { Injectable } from '@angular/core';
 import { UserModel } from 'src/models/user.model';
 import { BaseService } from './base.service';
@@ -78,6 +77,10 @@ export class UserService extends BaseService<UserModel> {
         : 'Cliente'
     );
     this.subUserData.next(this.userData);
+  }
+
+  async updateUserSession(user: UserModel) {
+    await localStorage.setItem(CONSTANTS.keyStore.user, JSON.stringify(user));
   }
 
   userIsLogged(): boolean {

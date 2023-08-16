@@ -9,38 +9,36 @@ import { Router } from '@angular/router';
   styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent implements OnInit {
-
   @Input('title') title: string = '';
   @Input('check-login') isLogged: boolean = false;
   @Input('back') isBack: boolean = false;
   @Output() selected = new EventEmitter();
 
-  constructor(
-    private alertSrv: AlertService,
-    private router: Router
-    ) { }
+  constructor(private alertSrv: AlertService, private router: Router) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   goProfile() {
-    this.router.navigateByUrl('/tabs/profile');
+    this.router.navigateByUrl('/tabs/tab-profile');
   }
 
   async logout(): Promise<void> {
-    const result = await this.alertSrv.confirm('Sair do App', 'Deseja sair do Lacarte?', this.desconecta.bind(this));
-    if(result.role === 'Ok') {
+    const result = await this.alertSrv.confirm(
+      'Sair do App',
+      'Deseja sair do Lacarte?',
+      this.desconecta.bind(this)
+    );
+    if (result.role === 'Ok') {
       this.isLogged = false;
     }
   }
 
   desconecta(res: any) {
-    if(res) {
+    if (res) {
       localStorage.removeItem(CONSTANTS.keyStore.user);
       localStorage.removeItem(CONSTANTS.keyStore.profile);
       localStorage.removeItem(CONSTANTS.keyStore.token);
       this.selected.emit(true);
     }
   }
-
 }

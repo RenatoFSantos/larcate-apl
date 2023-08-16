@@ -7,13 +7,10 @@ import { HttpService } from './http.service';
 import { iResultHttp } from 'src/interfaces/iResultHttp';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PromotionService extends BaseService<PromotionModel> {
-
-  constructor(
-    public http: HttpService,
-  ) {
+  constructor(public override http: HttpService) {
     super('promotions', http);
   }
 
@@ -22,7 +19,7 @@ export class PromotionService extends BaseService<PromotionModel> {
     try {
       return this.http.get(url);
     } catch (error) {
-      return {success: false, data: undefined, error};
+      return { success: false, data: undefined, error };
     }
   }
 }

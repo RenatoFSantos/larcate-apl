@@ -1,0 +1,78 @@
+.imgCategory {
+  width: 100px;
+  height: 100px;
+  border-radius: 20%;
+  margin: 5px 20px 5px 5px;
+}
+
+.imgProduct {
+  width: 100px;
+  height: 100px;
+  min-width: 100px;
+  border-radius: 10%;
+  margin-right: 0px;
+}
+
+ion-item.item.md.item-fill-none.hydrated {
+  --padding-start: 0px !important;
+}
+
+/* iOS places the subtitle above the title */
+ion-card-header.ios {
+  display: flex;
+  flex-flow: column-reverse;
+}
+
+ion-card {
+  margin: 10px;
+}
+
+ion-thumbnail {
+  --border-radius: 14px;
+}
+
+ion-icon {
+  margin-left: 20px;
+}
+
+ion-back-button {
+  display: block;
+}
+
+.titleCategory {
+  font-size: medium;
+}
+
+.menu {
+  display: grid;
+  justify-content: stretch;
+  align-content: flex-start;
+}
+
+.title {
+  grid-area: title;
+  font-weight: 700;
+  align-self: flex-start;
+}
+
+.subtitle {
+  grid-area: subtitle;
+  padding: 0;
+  align-self: flex-end;
+}
+
+.description {
+  grid-area: description;
+}
+
+.photo {
+  grid-area: photo;
+  justify-self: end;
+}
+
+.grid-template-area {
+  grid-template:
+    "subtitle subtitle subtitle photo"
+    "title title title photo"
+    "description description description photo";
+}

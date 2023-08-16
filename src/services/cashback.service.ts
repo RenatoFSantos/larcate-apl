@@ -7,13 +7,10 @@ import { BaseService } from './base.service';
 import { HttpService } from './http.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CashbackService extends BaseService<FidelityModel> {
-
-  constructor(
-    public http: HttpService
-  ) {
+  constructor(public override http: HttpService) {
     super('fidelities', http);
   }
 
@@ -24,18 +21,21 @@ export class CashbackService extends BaseService<FidelityModel> {
     try {
       return await this.http.get(url);
     } catch (error) {
-      return {success: false, data: {}, error};
+      return { success: false, data: {}, error };
     }
   }
 
-  async getFidelityByUserPromotion(userUid: string, promotionUid: string): Promise<iResultHttp> {
+  async getFidelityByUserPromotion(
+    userUid: string,
+    promotionUid: string
+  ): Promise<iResultHttp> {
     console.log('Entrei no getFidelityByUserPromotion');
     const url = `${environment.apiPath}/fidelities/${userUid}/user/${promotionUid}/promotion`;
     console.log('url = ', url);
     try {
       return await this.http.get(url);
     } catch (error) {
-      return {success: false, data: {}, error};
+      return { success: false, data: {}, error };
     }
   }
 
@@ -44,7 +44,7 @@ export class CashbackService extends BaseService<FidelityModel> {
     try {
       return await this.http.post(url, model);
     } catch (error) {
-      return {success: false, data: {}, error};
+      return { success: false, data: {}, error };
     }
   }
 
@@ -53,8 +53,7 @@ export class CashbackService extends BaseService<FidelityModel> {
     try {
       return await this.http.post(url, model);
     } catch (error) {
-      return {success: false, data: {}, error};
+      return { success: false, data: {}, error };
     }
   }
-
 }

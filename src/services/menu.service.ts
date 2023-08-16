@@ -5,13 +5,10 @@ import { BaseService } from './base.service';
 import { HttpService } from './http.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MenuService extends BaseService<MenuModel> {
-
-  constructor(
-    public http: HttpService
-  ) {
+  constructor(public override http: HttpService) {
     super('menus', http);
   }
 
@@ -20,11 +17,11 @@ export class MenuService extends BaseService<MenuModel> {
     const url = `${this.urlBase}/company/${id}`;
     try {
       const result = await this.http.get(url);
-      if(result.success) {
+      if (result.success) {
         listMenu = result.data.menuList as Array<MenuModel>;
       }
     } catch (error) {
-      throw(error);
+      throw error;
     }
     return listMenu;
   }
@@ -34,19 +31,17 @@ export class MenuService extends BaseService<MenuModel> {
     const url = `${this.urlBase}/company/${id}`;
     try {
       const result = await this.http.get(url);
-      if(result.success) {
+      if (result.success) {
         const listMenuModel = result.data.menuList as Array<MenuModel>;
         console.log('ListMenuModel =', listMenuModel);
-        listMenuModel.map(menu => {
+        listMenuModel.map((menu) => {
           console.log(menu.product.category.cateNmCategory);
           listCategory.push(menu.product.category);
         });
       }
     } catch (error) {
-      throw(error);
+      throw error;
     }
     return listCategory;
   }
-
-
 }

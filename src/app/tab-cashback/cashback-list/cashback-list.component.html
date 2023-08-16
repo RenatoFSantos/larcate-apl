@@ -1,3 +1,162 @@
-<p>
-  cashback-list works!
-</p>
+<app-toolbar [title]="title" [check-login]="checked"></app-toolbar>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar color="primary">
+      <ion-title size="large">
+        {{ title }}
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <!-- ******************************************** -->
+  <!-- CASHBACK -->
+  <!-- ******************************************** -->
+  <div *ngIf="!isMyWallet">
+    <!-- COMPANY -->
+    <ion-item *ngIf="listPromotions.length > 0" lines="full">
+      <ion-thumbnail slot="start">
+        <img [src]="loadingPhoto(company.compDsLogo)" />
+      </ion-thumbnail>
+      <ion-label>
+        <h1>{{ company.compNmTrademark }}</h1>
+        <p *ngIf="company.compDsSmartphone">
+          {{ company.compDsSmartphone | mask : "(99) 99999-9999" }}
+        </p>
+      </ion-label>
+    </ion-item>
+    <!-- PROMOTIONS -->
+    <div *ngIf="!isDetail">
+      <div *ngIf="listPromotions.length > 0">
+        <ion-item
+          button
+          lines="full"
+          *ngFor="let promotion of listPromotions"
+          (click)="detailPromotion(promotion)"
+        >
+          <ion-icon name="gift-outline" slot="start"></ion-icon>
+          <ion-label>
+            <h2>{{ promotion.promNmPromotion }}</h2>
+            <p>
+              {{ promotion.promDtStart | date : "dd/MM/yyyy" }} até
+              {{ promotion.promDtFinish | date : "dd/MM/yyyy" }}
+            </p>
+          </ion-label>
+          <ion-button *ngIf="validPromotion(promotion.promDtFinish) <= 0">
+            Encerrada
+          </ion-button>
+        </ion-item>
+      </div>
+      <div *ngIf="listPromotions.length <= 0">
+        <ion-item lines="full">
+          <label>Nenhuma promoção cadastrada!</label>
+        </ion-item>
+      </div>
+    </div>
+  </div>
+  <!-- ******************************************** -->
+  <!-- MY WALLET -->
+  <!-- ******************************************** -->
+  <div *ngIf="isMyWallet">
+    <!-- PROMOTIONS -->
+    <div *ngIf="!isDetail">
+      <div *ngIf="listFidelities.length > 0">
+        <ion-item
+          button
+          lines="full"
+          *ngFor="let fidelity of listFidelities"
+          (click)="detailPromotion(fidelity.promotion)"
+        >
+          <ion-icon name="gift-outline" slot="start"></ion-icon>
+          <ion-label>
+            <h1>{{ fidelity.promotion.company.compNmTrademark }}</h1>
+            <h2>{{ fidelity.promotion.promNmPromotion }}</h2>
+            <p>
+              {{ fidelity.promotion.promDtStart | date : "dd/MM/yyyy" }} até
+              {{ fidelity.promotion.promDtFinish | date : "dd/MM/yyyy" }}
+            </p>
+          </ion-label>
+          <ion-button
+            *ngIf="validPromotion(fidelity.promotion.promDtFinish) <= 0"
+          >
+            Encerrada
+          </ion-button>
+        </ion-item>
+      </div>
+      <div *ngIf="listFidelities.length <= 0">
+        <ion-item lines="full">
+          <label>Sua carteira está vazia!</label>
+        </ion-item>
+      </div>
+    </div>
+  </div>
+  <!-- PROMOTION DETAILS -->
+  <div class="pagePromotion" *ngIf="isDetail">
+    <h2 class="promotion">{{ selPromotion.promNmPromotion }}</h2>
+    <p>{{ selPromotion.promDsPromotion }}</p>
+    <!-- FIDELITY CARD -->
+    <div *ngIf="user.userCdType !== 'A' || !isAdmin">
+      <ion-grid>
+        <ion-row>
+          <ion-col *ngFor="let ind of indexes; let i = index">
+            <img
+              *ngIf="count >= ind"
+              class="btn-action"
+              src="../../../assets/logo.png"
+            />
+            <ion-button
+              *ngIf="count < ind"
+              class="btn-action"
+              size="small"
+              fill="outline"
+              (click)="getVoucher(ind)"
+            >
+              {{ i + 1 }}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-button
+        [disabled]="count < 10"
+        *ngIf="isActivePromotion"
+        class="btn-rescue"
+        expand="block"
+        size="default"
+        (click)="rescueConfirm(selPromotion)"
+      >
+        Resgatar Promoção
+      </ion-button>
+      <ion-chip *ngIf="!isActivePromotion">
+        <ion-icon name="gift-outline"></ion-icon>
+        <ion-label>Encerrada</ion-label>
+      </ion-chip>
+      <ion-button
+        class="btn-rescue"
+        expand="block"
+        size="default"
+        fill="outline"
+        (click)="backList()"
+      >
+        Voltar
+      </ion-button>
+    </div>
+    <!-- CODE GENERATOR FOR ADMINISTRATOR AND COMPANY RESPONSIBLE -->
+    <div *ngIf="user.userCdType === 'A' && isAdmin">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <h1>{{ codeGenerated }}</h1>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-progress-bar [value]="progress"></ion-progress-bar>
+      <ion-button
+        class="btn-rescue"
+        expand="block"
+        size="default"
+        (click)="backList()"
+      >
+        Voltar
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

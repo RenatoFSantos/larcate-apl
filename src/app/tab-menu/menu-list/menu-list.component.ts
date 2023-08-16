@@ -23,6 +23,7 @@ export class MenuListComponent implements OnInit, OnDestroy {
   resourceList: Array<CompanyModel> = new Array<CompanyModel>();
   resourceListFilter: Array<CompanyModel> = new Array<CompanyModel>();
   checked: boolean = false;
+  title = 'Cardápio';
   @ViewChild('search') search: ElementRef;
 
   constructor(
@@ -39,9 +40,6 @@ export class MenuListComponent implements OnInit, OnDestroy {
 
   async loadingResourceList(): Promise<void> {
     console.log('Carregando a lista de empresas');
-    // **************************************************************
-    // VERSÃO 2 - PROMISE
-    // **************************************************************
     this.active.params
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(async (resolve) => {
@@ -50,24 +48,10 @@ export class MenuListComponent implements OnInit, OnDestroy {
         if (result.success) {
           this.resourceList = result.data as Array<CompanyModel>;
           this.resourceListFilter = this.resourceList;
-          // this.search.nativeElement.value = '';
           this.search.nativeElement = '';
         }
         this.checked = this.checkLogin();
       });
-
-    // **************************************************************
-    // VERSÃO 2 - PROMISE
-    // **************************************************************
-    // const result = await this.companySrv.getAll();
-    // if (result.success) {
-    //   this.resourceList = result.data as Array<CompanyModel>;
-    //   this.resourceListFilter = this.resourceList;
-    //   // this.search.nativeElement.value = '';
-    //   this.search.nativeElement = '';
-    // }
-    // this.checked = this.checkLogin();
-    // console.log('Valor do checked=', this.checked);
   }
 
   selectCompany(id: any) {
@@ -75,6 +59,7 @@ export class MenuListComponent implements OnInit, OnDestroy {
   }
 
   checkLogin(): boolean {
+    console.log('Usuário está logado? ', this.userSrv.userIsLogged());
     return this.userSrv.userIsLogged();
   }
 

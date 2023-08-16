@@ -25,9 +25,9 @@ export class HttpService {
           'Content-Type': 'application/json',
           Accept: 'application/json',
           'x-token-access': token,
-          // 'Access-Control-Allow-Origin': '*',
-          // 'Access-Control-Allow-Methods': 'GET, POST, PUT, OPTIONS',
-          // 'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST',
+          'Access-Control-Allow-Headers': '*',
         }),
         params: new HttpParams({}),
       };
@@ -36,9 +36,9 @@ export class HttpService {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
           Accept: 'application/json',
-          // 'Access-Control-Allow-Origin': '*',
-          // 'Access-Control-Allow-Methods': 'GET, POST, PUT, OPTIONS',
-          // 'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST',
+          'Access-Control-Allow-Headers': 'Content-Type',
         }),
         params: new HttpParams({}),
       };

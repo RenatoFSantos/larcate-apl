@@ -1,3 +1,57 @@
-<p>
-  menu-detail works!
-</p>
+<ion-header *ngIf="itemDetail">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button fill="clear" size="default" (click)="closeMenu()">
+        <ion-icon slot="start" name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="titleCategory">
+      {{ selCategory }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar color="primary">
+      <ion-title size="large">{{ title }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <!-- CATEGORY MENU -->
+  <div *ngIf="!itemDetail">
+    <ion-item
+      detail="true"
+      lines="full"
+      *ngFor="let category of listCategory"
+      (click)="filterCategory(category.uid)"
+    >
+      <img class="imgCategory" [src]="loadingPhoto(category.cateTxImage)" />
+      <h3>{{ category.cateNmCategory }}</h3>
+    </ion-item>
+    <ion-item lines="full" *ngIf="listCategory.length === 0">
+      <ion-icon name="book-outline" slot="start"></ion-icon>
+      <ion-label>Sem produtos no momento!</ion-label>
+    </ion-item>
+  </div>
+  <!-- DETAIL MENU -->
+  <div *ngIf="itemDetail">
+    <ion-card *ngFor="let menu of listMenu">
+      <ion-card-content class="menu grid-template-area">
+        <app-star-rating
+          class="subtitle"
+          [rating]="menu.menuVlRating"
+          [vote]="false"
+        ></app-star-rating>
+        <h1 class="title">{{ menu.product.prodNmProduct }}</h1>
+        <img class="photo imgProduct" [src]="loadingPhoto(menu.menuTxImage)" />
+        <ion-label class="description">
+          <p>{{ menu.product.prodDsProduct }}</p>
+          <h2>
+            <strong>{{
+              menu.menuVlPrice | currency : "BRL" : true : "1.2-2"
+            }}</strong>
+          </h2>
+        </ion-label>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
