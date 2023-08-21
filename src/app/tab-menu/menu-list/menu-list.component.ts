@@ -89,8 +89,13 @@ export class MenuListComponent implements OnInit, OnDestroy {
     }
   }
 
+  cashback(id: any) {
+    console.log('Entrei no cashback', id);
+    this.router.navigateByUrl(`/tabs/tab-cashback/${id}`);
+  }
+
   ngOnDestroy(): void {
-    console.log('Estou no ngOnDestroy');
+    console.log('Estou no ngOnDestroy do Cashback');
     this.unsubscribe.next();
     this.unsubscribe.complete();
   }

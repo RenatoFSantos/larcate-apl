@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Event } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 
 @Injectable({
@@ -60,26 +61,9 @@ export class AlertService {
     let code;
     const auth = await this.alertCtrl.create({
       header: 'Código de Autorização',
-      buttons: [
-        {
-          text: 'Ok',
-          role: 'Ok',
-          handler: () => {
-            auth.dismiss(true);
-            // callback(true);
-          },
-        },
-        {
-          text: 'Cancelar',
-          role: 'Cancel',
-          handler: () => {
-            auth.dismiss(false);
-            // callback(false);
-          },
-        },
-      ],
       inputs: [
         {
+          name: 'codVoucher',
           placeholder: 'Código',
           cssClass: 'code-auth',
           attributes: {
@@ -87,11 +71,27 @@ export class AlertService {
           },
         },
       ],
+      buttons: [
+        {
+          text: 'Ok',
+          role: 'ok',
+          handler: (alertData) => {
+            auth.dismiss(alertData.codVoucher);
+          },
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: (alertData) => {
+            auth.dismiss(alertData);
+          },
+        },
+      ],
     });
     await auth.present();
-    await auth.onDidDismiss().then((data) => {
-      console.log('Valor data = ', data);
-      code = data;
+    await auth.onDidDismiss().then((res) => {
+      console.log('Valor data = ', res);
+      code = res;
     });
     console.log('Retorno data=', code);
     return code;

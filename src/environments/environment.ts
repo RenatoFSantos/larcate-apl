@@ -7,8 +7,8 @@ export const environment = {
   // apiPath: 'http://172.20.20.178:3000' // Malibu
   // apiPath: 'http://192.168.100.11:3000', // Asus
   // apiPath: 'http://24.199.110.111:3000', // Digital Ocean
-  apiPath: 'http://localhost:3000', // Para utilizar acessando pelo browser
-  // apiPath: 'https://lacarte-api.onrender.com', // Render
+  // apiPath: 'http://localhost:3000', // Para utilizar acessando pelo browser
+  apiPath: 'https://lacarte-api.onrender.com', // Render
 };
 
 /*

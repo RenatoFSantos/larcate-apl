@@ -394,7 +394,8 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
       'Deseja sair do Lacarte?',
       this.desconecta
     );
-    if (result.role === 'Ok') {
+    console.log('Valor do result no logout=', result);
+    if (result.data) {
       this.inRegister = false;
       this.birthDate = '';
       this.birthDateTime = '';

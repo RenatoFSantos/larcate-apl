@@ -1,10 +1,7 @@
-import { AlertService } from './alert.service';
-import { environment } from './../environments/environment';
 import { Injectable } from '@angular/core';
 import { PromotionModel } from 'src/models/promotion.model';
 import { BaseService } from './base.service';
 import { HttpService } from './http.service';
-import { iResultHttp } from 'src/interfaces/iResultHttp';
 
 @Injectable({
   providedIn: 'root',
@@ -14,12 +11,17 @@ export class PromotionService extends BaseService<PromotionModel> {
     super('promotions', http);
   }
 
-  async getPromotionsByCompany(uid: string): Promise<iResultHttp> {
-    const url = `${environment.apiPath}/promotions/company/${uid}`;
+  async getPromotionsByCompany(uid: string): Promise<Array<PromotionModel>> {
+    let listPromotion: Array<PromotionModel> = new Array<PromotionModel>();
+    const url = `${this.urlBase}/company/${uid}`;
     try {
-      return this.http.get(url);
+      const result = await this.http.get(url);
+      if (result.success) {
+        listPromotion = result.data.resourceList as Array<PromotionModel>;
+      }
     } catch (error) {
-      return { success: false, data: undefined, error };
+      throw error;
     }
+    return listPromotion;
   }
 }

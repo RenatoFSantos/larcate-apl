@@ -86,6 +86,7 @@ export class CashbackListComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribeCompany))
       .subscribe(async (p) => {
         if (p['id'] !== undefined) {
+          console.log('Carregando promoções da empresa=', p['id']);
           this.title = 'Promoções';
           this.isMyWallet = false;
           this.setCompany(p['id']);
@@ -99,7 +100,6 @@ export class CashbackListComponent implements OnInit, OnDestroy {
             of(this.user.uid)
               .pipe(takeUntil(this.unsubscribeUser))
               .subscribe(async (id) => {
-                console.log('valor do id antes do getFidelityByUser=', id);
                 const result = await this.cashbackSrv.getFidelityByUser(id);
                 if (result.success) {
                   this.listFidelities = result.data as Array<FidelityModel>;
@@ -163,14 +163,9 @@ export class CashbackListComponent implements OnInit, OnDestroy {
   }
 
   async loadingPromotions() {
-    this.listPromotions = new Array<PromotionModel>();
-    const result = await this.promotionSrv.getPromotionsByCompany(
+    this.listPromotions = await this.promotionSrv.getPromotionsByCompany(
       this.company.uid
     );
-    if (result.success) {
-      this.listPromotions = (await result.data
-        .resourceList) as Array<PromotionModel>;
-    }
   }
 
   loadingPhoto(imgPhoto: any): any {
@@ -285,7 +280,8 @@ export class CashbackListComponent implements OnInit, OnDestroy {
         await this.voucherGenerator();
       }
       this.codeVoucher = await this.voucherAuthorization();
-      if (this.codeGenerated.trim() === this.codeVoucher.trim()) {
+      console.log('Valor do codeVoucher retorno = ', this.codeVoucher);
+      if (this.codeGenerated === this.codeVoucher) {
         if (ind > 0) {
           this.count = this.count + 1;
           this.cashback.fideQnVoucher = this.count;
@@ -305,8 +301,10 @@ export class CashbackListComponent implements OnInit, OnDestroy {
   async voucherAuthorization(): Promise<any> {
     let result = '0';
     await this.alertSrv.codeAuthorization().then((resp) => {
-      if (resp.role === 'Ok') {
-        result = resp.data.values[0];
+      if (resp?.data) {
+        result = resp.data;
+      } else {
+        result = '0';
       }
     });
     return result;
@@ -341,7 +339,6 @@ export class CashbackListComponent implements OnInit, OnDestroy {
     this.progressInterval = setInterval(() => {
       this.progress += 0.01;
       if (this.progress > 1) {
-        console.log('Setando intervalo', this.progress);
         setTimeout(() => {
           this.progress = 0;
           this.voucherGenerator();

@@ -22,12 +22,12 @@
     show-clear-button="focus"
     placeholder="Localizar"
   ></ion-searchbar>
-  <ion-card
-    *ngFor="let resource of resourceListFilter"
-    [routerLink]="'company/' + resource.uid"
-  >
-    <img [src]="loadingPhoto(resource.compTxImage)" />
-    <ion-card-header>
+  <ion-card *ngFor="let resource of resourceListFilter">
+    <img
+      [src]="loadingPhoto(resource.compTxImage)"
+      [routerLink]="'company/' + resource.uid"
+    />
+    <ion-card-header [routerLink]="'company/' + resource.uid">
       <ion-card-title>{{
         resource.compNmTrademark || "Sem nome"
       }}</ion-card-title>
@@ -35,15 +35,11 @@
         resource.compDsSmartphone | mask : "(99) 99999-9999"
       }}</ion-card-subtitle>
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-content [routerLink]="'company/' + resource.uid">
       {{ resource.compDsCompany || "--- Sem descrição ---" }}
     </ion-card-content>
     <div class="cashback">
-      <ion-button
-        fill="clear"
-        size="small"
-        [routerLink]="'/tabs/cashback/' + resource.uid"
-      >
+      <ion-button fill="clear" size="small" (click)="cashback(resource.uid)">
         <ion-icon slot="icon-only" name="cash-outline"></ion-icon>
       </ion-button>
     </div>
